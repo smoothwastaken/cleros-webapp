@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 // AuthContext is a React Context that provides the user's authentication state.
-import { AuthProvider } from './contexts/authContexts';
+import { AuthProvider } from './contexts/authContext';
+import Container from "./components/ContainerComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="fr">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <Container>{children}</Container>
+        </body>
       </html>
     </AuthProvider>
   );
