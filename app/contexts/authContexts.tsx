@@ -1,5 +1,7 @@
+"use client"
+
 import React, { createContext, useEffect, useState, ReactNode } from 'react';
-import firebase from '../lib/firebase';
+import auth from '../lib/firebase';
 import { User, getAuth } from 'firebase/auth';
 
 interface AuthContextInterface {
@@ -16,7 +18,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    getAuth().onAuthStateChanged(setUser);
+    auth.onAuthStateChanged(setUser);
   }, []);
 
   return (
