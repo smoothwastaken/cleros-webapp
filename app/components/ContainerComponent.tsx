@@ -13,12 +13,14 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
       backdropFilter: "blur(40px)",
     }}>
       <Header />
-      <div className='absolute z-50 inset-x-0 bottom-0 h-1/2 w-screen bg-gradient-to-b from-transparent to-black'></div>
-      <div className='p-[1px] min-h-screen bg-gradient-to-br from-gray-700 via-black to-gray-500 rounded-3xl shadow-xl mt-5'>
-        <div className='bg-black bg-opacity-50 min-h-screen w-full bg-clip-padding rounded-3xl border-[1px] border-opacity-5 border-gray-400 p-5' style={{backdropFilter: 'blur(1000px)'}}>
-          {children}
+      <div className='scale-90 hover:scale-95 ease-in-out transition-all duration-300'>
+        <div className='p-[1.5px] min-h-screen bg-gradient-to-br from-gray-700 via-black to-gray-500 rounded-3xl shadow-xl mt-5'>
+          <div className='bg-black bg-opacity-50 min-h-screen w-full bg-clip-padding rounded-3xl p-5' style={{backdropFilter: 'blur(100px)'}}>
+            {children}
+          </div>
         </div>
       </div>
+      <div className='absolute pointer-events-none z-50 inset-x-0 bottom-0 h-4/6 w-screen bg-gradient-to-b from-transparent to-black'></div>
     </main>
   )
 }
