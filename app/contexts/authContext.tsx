@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useEffect, useState, ReactNode } from 'react';
-import auth from '../lib/firebase';
+import auth from '@/app/lib/firebase';
 import { User, getAuth } from 'firebase/auth';
 
 interface AuthContextInterface {
@@ -19,7 +19,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setUser);
-  }, []);
+    console.log("User:")
+    console.log(user)
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user }}>
