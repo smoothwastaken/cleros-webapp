@@ -8,7 +8,7 @@ interface ContainerProps {
 const Container: React.FC<ContainerProps> = ({ children }) => {
   return (
     <main
-    className="max-h-fit bg-gradient-to-br from-gray-950 to-gray-800 bg-clip-padding p-5"
+    className="max-h-fit bg-gradient-to-br from-black to-gray-800 bg-clip-padding p-5"
     style={{
       backdropFilter: "blur(40px)",
     }}>
@@ -20,7 +20,7 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className='absolute pointer-events-none z-50 inset-x-0 bottom-0 h-4/6 w-screen bg-gradient-to-b from-transparent to-black'></div>
+      <div className='absolute pointer-events-none z-50 inset-x-0 bottom-0 h-4/6 w-screen bg-gradient-to-b from-transparent via-black to-black'></div>
     </main>
   )
 }

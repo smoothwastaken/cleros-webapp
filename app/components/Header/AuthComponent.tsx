@@ -64,6 +64,8 @@ function Auth() {
                   </div>
                   <button onClick={() => {
                     signInWithEmailAndPassword(auth, logEmail, logPassword)
+                    setLogEmail('')
+                    setLogPassword('')
                     setLogPopUp(false)
                   }} className='p-2 select-none border-gray-700 text-gray-200 bg-white bg-opacity-0 border-[1px] rounded-xl outline-none focus:bg-opacity-5 hover:bg-opacity-5 transition-all duration-300'>Connexion</button>
                 </div>
@@ -87,8 +89,10 @@ function Auth() {
                   <div className='flex items-center justify-between mb-4'></div>
                   <button onClick={() => {
                     createUserWithEmailAndPassword(auth, regEmail, regPassword)
+                    setRegEmail('')
+                    setRegPassword('')
                     setRegisterPopUp(false)
-                  }} className='p-2 select-none border-gray-700 text-gray-200 bg-white bg-opacity-0 border-[1px] rounded-xl outline-none focus:bg-opacity-5 hover:bg-opacity-5 transition-all duration-300'>Connexion</button>
+                  }} className='p-2 select-none border-gray-700 text-gray-200 bg-white bg-opacity-0 border-[1px] rounded-xl outline-none focus:bg-opacity-5 hover:bg-opacity-5 transition-all duration-300'>Inscription</button>
                 </div>
               </div>
             </div>
