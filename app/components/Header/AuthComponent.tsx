@@ -3,9 +3,8 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '@/app/contexts/authContext';
 import auth from '@/app/lib/firebase';
-import Link from 'next/link';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { set } from 'firebase/database';
+import { toast } from 'react-hot-toast';
 
 function Auth() {
   const { user } = useContext(AuthContext) ?? { user: null };
@@ -63,7 +62,18 @@ function Auth() {
                     <p className='text-gray-400 select-none hover:text-gray-200 transition-all duration-300 cursor-pointer'>Mot de passe oublié ?</p>
                   </div>
                   <button onClick={() => {
-                    signInWithEmailAndPassword(auth, logEmail, logPassword)
+                    signInWithEmailAndPassword(auth, logEmail, logPassword).then((userCredential) => {
+                      if (userCredential) {
+                        toast.success('Vous êtes maintenant connecté !')
+                      }
+                    })
+                    .catch((error) => {
+                      if (error.code === 'auth/invalid-email') {
+                        toast.error('Aucun compte n\'est associé à cette adresse email !')
+                      } else if (error.code === 'auth/invalid-credential') {
+                        toast.error('Vérifiez vos identifiants...')
+                      }
+                    })
                     setLogEmail('')
                     setLogPassword('')
                     setLogPopUp(false)
@@ -88,7 +98,11 @@ function Auth() {
                   }} value={regPassword} className='p-2 border-gray-700 text-gray-200 bg-white bg-opacity-0 border-[1px] rounded-xl outline-none focus:bg-opacity-5 hover:bg-opacity-5 transition-all duration-300' type="password" placeholder="Mot de passe" />
                   <div className='flex items-center justify-between mb-4'></div>
                   <button onClick={() => {
-                    createUserWithEmailAndPassword(auth, regEmail, regPassword)
+                    createUserWithEmailAndPassword(auth, regEmail, regPassword).then((userCredential) => {
+                      if (userCredential) {
+                        toast.success('Votre compte a bien été créé !')
+                      }
+                    })
                     setRegEmail('')
                     setRegPassword('')
                     setRegisterPopUp(false)
