@@ -20,7 +20,7 @@ const Container: React.FC<ContainerProps> = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className='absolute pointer-events-none z-50 inset-x-0 bottom-0 h-4/6 w-screen bg-gradient-to-b from-transparent via-black to-black'></div>
+      <div className='absolute pointer-events-none z-10 inset-x-0 bottom-0 h-4/6 w-screen bg-gradient-to-b from-transparent via-black to-black'></div>
     </main>
   )
 }
