@@ -5,7 +5,7 @@ function Logo() {
   return (
     <>
     {/* <Image src={""} alt="clErOS's logo" /> */}
-    <Link href={"/"}><h1 className='select-none'>clErOS</h1></Link>
+    <Link href={"/"}><h1 className='select-none text-white'>clErOS</h1></Link>
     </>
   )
 }
