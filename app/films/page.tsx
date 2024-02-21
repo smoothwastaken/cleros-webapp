@@ -36,7 +36,7 @@ export default function Films() {
       <div className="scale-90 transition-all duration-300 ease-in-out hover:scale-95 ">
           <div
             style={{
-              backgroundImage: `url('https://image.tmdb.org/t/p/original${filmSelected?.infos?.backdrop_path}')`,
+              backgroundImage: `url('https://image.tmdb.org/t/p/original${filmSelected?.backdrop_path}')`,
               backgroundPosition: "center",
               backgroundSize: "cover",
             }}

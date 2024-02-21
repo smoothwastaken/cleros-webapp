@@ -9,22 +9,20 @@ import {
 } from "firebase/firestore";
 
 export interface FilmData {
-  infos: {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: number[];
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    release_date: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-  };
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
   versions: {
     full_hd_vf?: string;
     hd_vf?: string;
@@ -123,13 +121,13 @@ export async function getAllFilms(callback: Function) {
 }
 
 export async function getFilmById(id: number, callback: Function) {
-  const q = query(collection(db, "films"), where("infos.id", "==", id));
+  const q = query(collection(db, "films"), where("id", "==", Number(id)));
   const querySnapshot = await getDocs(q);
   callback(querySnapshot.docs.map((doc) => doc.data()));
 }
 
 export async function getFilmByTitle(title: string, callback: Function) {
-  const q = query(collection(db, "films"), where("infos.title", "==", title));
+  const q = query(collection(db, "films"), where("title", "==", title));
   const querySnapshot = await getDocs(q);
   callback(querySnapshot.docs.map((doc) => doc.data()));
 }
@@ -180,7 +178,7 @@ export async function getFilmsByGenre(
 ) {
   const q = query(
     collection(db, "films"),
-    where("infos.genre_ids", "array-contains", genreId),
+    where("genre_ids", "array-contains", genreId),
     limit(maxFilmsLimit),
   );
   const querySnapshot = await getDocs(q);
