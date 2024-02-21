@@ -30,7 +30,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="fr" suppressHydrationWarning>
         <body className={cn(inter.className)}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Toaster />
             <Container>{children}</Container>
           </ThemeProvider>

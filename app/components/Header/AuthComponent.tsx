@@ -210,7 +210,7 @@ function Auth() {
                     type="submit"
                     variant={"outline"}
                   >
-                    S'inscrire
+                    {"S'inscrire"}
                   </Button>
                 </DialogFooter>
               </DialogContent>

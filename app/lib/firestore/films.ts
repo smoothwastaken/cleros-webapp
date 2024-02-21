@@ -209,7 +209,7 @@ export async function getFilmImages(filmId: number, callback: Function) {
   fetch(url, options)
     .then((res) => res.json())
     .then((json) => {
-      if (json.logos.lenght > 0) {
+      if (json.logos.length > 0) {
         callback(json);
       } else {
         const url = `https://api.themoviedb.org/3/movie/${filmId}/images?include_image_language=en`;

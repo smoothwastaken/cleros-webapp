@@ -3,27 +3,38 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Header from "@/app/components/Header";
-import { FilmData, getLatestFilms, getRandomFilms } from "../lib/firestore/films";
+import { FilmData, getLatestFilms, getMostPopularFilms, getRandomFilms } from "../lib/firestore/films";
 import HeroFilms from "../components/FilmsPage/HeroFilm";
+import FooterFilms from "../components/FilmsPage/FooterFilms";
 
 export default function Films() {
   const [films, setFilms] = useState<FilmData[]>([]);
-  const [filmNumber, setFilmNumber] = useState<number>(4);
+  const [filmNumber, setFilmNumber] = useState<number>(0);
+  const [filmSelected, setFilmSelected] = useState<FilmData>(films[filmNumber]);
+
+  const [enableFooter, setEnableFooter] = useState<boolean>(true);
+
   useEffect(() => {
-    getLatestFilms(10, (films: FilmData[]) => {
+    getRandomFilms(5, (films: FilmData[]) => {
       setFilms(films);
     });
+
   }, []);
+
+  useEffect(() => {
+    setFilmSelected(films[filmNumber]);
+  }, [filmNumber, films])
 
   return (
     <>
       {/* Left Side Infos */}
-      <div className="pointer-events-none absolute bottom-0 left-0 z-[5] h-1/3 w-screen bg-gradient-to-b from-transparent to-black" />
+      <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-1/3 w-screen bg-gradient-to-b from-transparent to-black" />
+      {filmSelected ? (
+          <>
       <div className="scale-90 transition-all duration-300 ease-in-out hover:scale-95 ">
-        {films[filmNumber] ? (
           <div
             style={{
-              backgroundImage: `url('https://image.tmdb.org/t/p/original${films[filmNumber]?.infos.backdrop_path}')`,
+              backgroundImage: `url('https://image.tmdb.org/t/p/original${filmSelected?.infos.backdrop_path}')`,
               backgroundPosition: "center",
               backgroundSize: "cover",
             }}
@@ -37,11 +48,15 @@ export default function Films() {
                 }
               }
             >
-              <HeroFilms film={films[filmNumber]} />
+              <div className="scale-95 hover:scale-100 transition-all duration-300">
+                <HeroFilms film={filmSelected} />
+              </div>
             </div>
           </div>
-        ) : null}
       </div>
+      <FooterFilms enable={enableFooter} films={films.slice(0, filmNumber).concat([films[filmNumber]]).concat(films.slice(filmNumber + 1))} filmNumber={filmNumber} setFilmNumber={setFilmNumber} filmSelected={filmSelected} setFilmSelected={setFilmNumber}/>
+        </>
+        ) : null}
     </>
   );
 }

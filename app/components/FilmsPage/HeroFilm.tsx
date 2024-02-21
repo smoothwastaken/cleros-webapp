@@ -7,6 +7,7 @@ import Image from "next/image";
 import { FilmData, FilmDetails, FilmImages, getFilmDetails, getFilmImages } from "@/app/lib/firestore/films";
 
 import { HeartIcon } from "@heroicons/react/24/solid"; 
+import { Button } from "@/components/ui/button";
 
 function HeroFilms(props: { film: FilmData }) {
   const [film, setFilm] = React.useState<FilmData>(props.film);
@@ -22,9 +23,21 @@ function HeroFilms(props: { film: FilmData }) {
     });
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setFilm(props.film);
+      getFilmImages(film?.infos.id, (filmImages: FilmImages) => {
+        setFilmImages(filmImages);
+      });
+      getFilmDetails(film?.infos.id, (filmDetails: FilmDetails) => {
+        setFilmDetails(filmDetails);
+      });
+    }, 50);
+  }, [props.film, film]);
+
   return (
     <div key={film?.infos.id} className="grid grid-cols-2">
-      <div className="mt-20">
+      <div>
         {/* Title Artwork */}
         {filmImages?.logos[0]?.file_path ? (
           <div className="flex items-center w-full">
@@ -55,25 +68,21 @@ function HeroFilms(props: { film: FilmData }) {
             <p className="text-gray-400 text-xl">•</p>
             <div className="flex items-center gap-1">
               {filmDetails?.genres ? filmDetails?.genres.map((genre, index) => {
-                return  <p key={index} className="text-gray-200">{genre.name}{(index + 1) == filmDetails?.genres.length ? "" : ","}</p>
+                return  <p key={index} className="text-gray-200">{genre.name}{(index + 1) == filmDetails?.genres?.length ? "" : ","}</p>
               }) : null}
             </div>
         </div>
         {/* Overview */}
         <p className="mt-1 py-2 px-3 w-fit flex gap-2 text-gray-200 items-center hover:bg-opacity-35 bg-opacity-0 border-[1px] border-transparent hover:border-gray-500 transition-all duration-300 bg-black hover:shadow-xl rounded-xl">{film?.infos.overview}</p>
         {/* Buttons */}
-        <div className="flex items-center gap-5">
+        <div className="mt-1 flex items-center gap-5">
           {/* Watch button */}
           <Link href={film?.versions.hd_vf ? `${film?.versions.hd_vf}` : `${film?.versions.vf}`}>
-            <p className="mt-3 py-1 px-2 w-fit flex gap-2 items-center text-gray-200 hover:scale-105 bg-opacity-35 bg-black border-[1px] border-gray-500 transition-all duration-300 rounded-xl select-none">
-              Regarder
-            </p>
+              <Button variant={"default"}>Regarder</Button>
           </Link>
           {/* More details button */}
           <Link href={film?.versions.hd_vo ? `${film?.versions.hd_vo}` : `${film?.versions.vo}`}>
-            <p className="mt-3 py-1 px-2 w-fit flex gap-2 items-center text-gray-200 hover:scale-105 bg-opacity-35 bg-black border-[1px] border-gray-500 transition-all duration-300 rounded-xl select-none">
-              Plus de détails
-            </p>
+            <Button variant={"secondary"}>Plus de détail</Button>
           </Link>
         </div>
       </div>
