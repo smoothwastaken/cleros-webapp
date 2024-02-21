@@ -8,15 +8,15 @@ import Auth from './Header/AuthComponent'
 
 function Header() {
   return (
-    <div className="grid grid-cols-2 justify-between">
+    <div className="flex items-center sm:grid sm:grid-cols-2 sm:justify-between">
       {/* Left Part */}
-      <div className='flex items-center gap-5 justify-start'>
+      <div className='flex items-center gap-5 justify-start w-fit sm:full'>
         <Logo />
         <Links />
       </div>
       
       {/* Right Part */}
-      <div className='flex items-center gap-5 justify-end'>
+      <div className='flex items-center gap-3 sm:gap-5 justify-end'>
         <SearchBar />
         {/* Vertical Divider */}
         <div className="divider border-gray-700 border-[0.5px] h-8"></div>

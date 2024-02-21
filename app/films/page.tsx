@@ -6,23 +6,25 @@ import Header from "@/app/components/Header";
 import { FilmData, getLatestFilms, getMostPopularFilms, getRandomFilms } from "../lib/firestore/films";
 import HeroFilms from "../components/FilmsPage/HeroFilm";
 import FooterFilms from "../components/FilmsPage/FooterFilms";
+import { limit } from "firebase/firestore";
 
 export default function Films() {
   const [films, setFilms] = useState<FilmData[]>([]);
-  const [filmNumber, setFilmNumber] = useState<number>(0);
+  const [filmNumber, setFilmNumber] = useState<number>(3);
   const [filmSelected, setFilmSelected] = useState<FilmData>(films[filmNumber]);
 
   const [enableFooter, setEnableFooter] = useState<boolean>(true);
 
   useEffect(() => {
-    getRandomFilms(5, (films: FilmData[]) => {
+    const limitNombreFilms = 50;
+    getRandomFilms(limitNombreFilms, (films: FilmData[]) => {
       setFilms(films);
     });
 
   }, []);
 
   useEffect(() => {
-    setFilmSelected(films[filmNumber]);
+    setFilmSelected(films[filmNumber % films.length]);
   }, [filmNumber, films])
 
   return (
@@ -34,7 +36,7 @@ export default function Films() {
       <div className="scale-90 transition-all duration-300 ease-in-out hover:scale-95 ">
           <div
             style={{
-              backgroundImage: `url('https://image.tmdb.org/t/p/original${filmSelected?.infos.backdrop_path}')`,
+              backgroundImage: `url('https://image.tmdb.org/t/p/original${filmSelected?.infos?.backdrop_path}')`,
               backgroundPosition: "center",
               backgroundSize: "cover",
             }}
@@ -48,13 +50,13 @@ export default function Films() {
                 }
               }
             >
-              <div className="scale-95 hover:scale-100 transition-all duration-300">
-                <HeroFilms film={filmSelected} />
+              <div onMouseEnter={() => setEnableFooter(false)} onMouseLeave={() => setEnableFooter(true)} className="scale-95 hover:scale-100 transition-all duration-300">
+                <HeroFilms film={filmSelected} enableFooter={enableFooter} setEnableFooter={setEnableFooter}/>
               </div>
             </div>
           </div>
       </div>
-      <FooterFilms enable={enableFooter} films={films.slice(0, filmNumber).concat([films[filmNumber]]).concat(films.slice(filmNumber + 1))} filmNumber={filmNumber} setFilmNumber={setFilmNumber} filmSelected={filmSelected} setFilmSelected={setFilmNumber}/>
+      <FooterFilms enable={enableFooter} films={films.slice((filmNumber - 2) % films.length, (filmNumber + 3) % films.length)} filmNumber={filmNumber} setFilmNumber={setFilmNumber} filmSelected={filmSelected} setFilmSelected={setFilmNumber}/>
         </>
         ) : null}
     </>
