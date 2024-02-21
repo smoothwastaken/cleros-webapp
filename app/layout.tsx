@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <html lang="fr" className="h-screen" suppressHydrationWarning>
+      <html lang="fr" className="h-screen overflow-hidden" suppressHydrationWarning>
         <body className={cn(inter.className)}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Toaster />
